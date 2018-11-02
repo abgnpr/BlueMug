@@ -1,5 +1,5 @@
 <# : 
-
+@echo off
 title RUN
 :select
 cls
