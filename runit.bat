@@ -4,31 +4,31 @@ title RUN
 :select
 cls
 color 3f
+setlocal enabledelayedexpansion
 echo ...please wait for selection window...
 for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') do (
     set "cf=%%~I"
 )
 cls
-title RUN: %cf%
+title RUN:%cf%
 color 2F
+if defined cf ( 
 echo.
-set "bsp= "
-IF NOT " %cf%" == "%bsp%" (  
-echo hooraaah  
 "%cf%"
+set cf=
 echo.
 echo.
 pause
-echo. ) else (
-echo: No files selected. ) 
 echo.
+ ) else (
+echo: No files selected.
+echo. )
 CHOICE /C YN /M "Run more?"
 IF %errorlevel% EQU 1 ( GOTO select )
 IF %errorlevel% EQU 2 ( GOTO :EOF )
-rem end Batch portion / begin PowerShell hybrid chimera
-: #>
+: end Batch portion / begin PowerShell hybrid chimera #>
 
-$loc=type loc.txt
+$loc=type -path "$ENV:Userprofile\Documents\loc.wsp"
 Add-Type -AssemblyName System.Windows.Forms
 $f = new-object Windows.Forms.OpenFileDialog
 $f.InitialDirectory = $loc

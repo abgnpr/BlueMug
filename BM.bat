@@ -1,34 +1,76 @@
 @echo off
 color 1F
 SetLocal EnableDelayedExpansion
-cd %cd%
-set L=C
-title tasker%L%
-set ext=.c
+set path=C:\MinGW\bin;%path%
+set "home=%cd%"
+if not exist %userprofile%\Documents\loc.wsp ( 
+:createloc 
+type nul > "%userprofile%\Documents\loc.wsp"
+2>nul mkdir "%userprofile%\Desktop\YourProgs"
+>>"%userprofile%\Documents\loc.wsp" echo %userprofile%\Desktop\YourProgs
+) 
+rem content of loca has no quotes
+
+<"%userprofile%\Documents\loc.wsp" ( set /p "loca=" ) 
+if not defined loca ( GOTO createloc ) 
+%loca:~0,2%
+cd "%loca%"
+set "L=C" & set "ext=.c" & set "cplr=gcc"
+title BlueMug%L%
+
+:menu 
+title BlueMug%L%
+color 1F
 echo.
 echo: HELLO THERE
 echo.
+echo: START MENU 
+echo.
+echo: Let's program in %L% (Press S to switch language C/C++)
+echo.
 echo: N - Create a new program in %L%
 echo.
-echo: X - Continue with an existing %L% program.
+echo: X - Continue with an existing %L% program (source file)
 echo.
-CHOICE /C NX
+echo: R - Run a program (Executable.exe)
+echo.
+echo: L - Change workspace location 
+echo:     Current workspace folder - %loca%
+echo.
+CHOICE /C NXRLS
+
 if %errorlevel% EQU 1 (goto new) 
+
 if %errorlevel% EQU 2 (
 :editx 
 cls
 color 1F
 echo.
-echo ***AVAILABLE PROGRAM FILES***
+echo    AVAILABLE %L% PROGRAM FILES IN YOUR WORKSPACE
 echo.
 dir /b *%ext%
 echo.
-echo:Choose one of the above files
-echo:{Optionally, you can also create a new program file 
-echo: by specifying a program name below.}
 echo.
-set /p new=Name of the existing program that you want to edit: 
+echo:Optionally, you can also create a new program file 
+echo:by specifying a program name below
+echo.
+echo:OR Press ENTER to go back. 
+echo.
+set /p "new=Enter name of a program from the above list (just the name): "
+if not defined new cls & goto menu
 goto edit ) 
+
+if %errorlevel% EQU 3 (
+call "%home%\runit.bat"
+cls
+goto menu ) 
+
+if %errorlevel% EQU 4 ( goto option ) 
+
+if %errorlevel% EQU 5 (
+if %L% EQU C set "ext=.cpp" & set "cplr=g++" & set "L=C++" & cls & goto menu 
+if %L% EQU C++ set "ext=.c" & set "cplr=gcc" & set "L=C" & cls & goto menu ) 
+
 :new 
 cls
 title NEW PROGRAM in %L%
@@ -36,6 +78,7 @@ color 1F
 echo.
 set /p new=Enter name of the new program: 
 type nul > "%new%%ext%"
+
 :edit 
 cls 
 color 1F
@@ -60,7 +103,7 @@ echo.
 pause
 echo: Please wait...
 type nul > error.tmp
-C:\MinGW\bin\gcc.exe "%new%%ext%" -o "%cd%\%new%.exe" 2>> error.tmp 
+"%systemdrive%\MinGW\bin\%cplr%.exe" "%loca%\%new%%ext%" -o "%loca%\%new%.exe" 2>> error.tmp 
 for /f %%i IN ("error.tmp") DO set size=%%~zi
 if %size% EQU 0  ( 
 :run 
@@ -111,24 +154,33 @@ echo: N: Create new program
 echo.
 echo: X: Edit another program
 echo.
+echo: S: Start Menu
+echo.
 echo: Q: Quit
 echo.
 
-CHOICE /C ERDNXQ
-IF %errorlevel% EQU 1 ( GOTO edit ) 
-IF %errorlevel% EQU 2 ( GOTO run ) 
+CHOICE /C ERDNXSQ
+
+IF %errorlevel% EQU 1 ( 
+if not defined new goto option
+goto edit ) 
+IF %errorlevel% EQU 2 ( 
+if not defined new goto option
+goto run ) 
 IF %errorlevel% EQU 3 ( 
 2>nul del "%new%%ext%"
 2>nul del "%new%.exe"
-set new= 
-echo: DELETE succcessful!
+set new=
+echo: DELETE succcessful
 pause
 goto option ) 
 IF %errorlevel% EQU 4 ( GOTO new ) 
 IF %errorlevel% EQU 5 ( GOTO editx ) 
-IF %errorlevel% EQU 6 ( GOTO exitb ) 
+IF %errorlevel% EQU 6 ( cls & GOTO menu ) 
+IF %errorlevel% EQU 7 ( GOTO exitb ) 
 
-
+echo %errorlevel%
+pause
 :exitb 
 cls
 color 02
