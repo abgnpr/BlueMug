@@ -25,7 +25,8 @@ echo.
 CHOICE /C YN /M "Run more?"
 IF %errorlevel% EQU 1 ( GOTO select )
 IF %errorlevel% EQU 2 ( GOTO :EOF )
-: end Batch portion / begin PowerShell hybrid chimera #>
+rem end Batch portion / begin PowerShell hybrid chimera
+: #>
 
 $loc=type loc.txt
 Add-Type -AssemblyName System.Windows.Forms
