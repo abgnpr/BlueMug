@@ -38,7 +38,7 @@ cd "%loca%"
 
 Rem Start menu
 :menu 
-title BlueMug %L%  V1.0
+title BlueMug %L%  V1.0 Beta
 Rem Blue background
 color 1F
 echo.
