@@ -38,7 +38,7 @@ cd "%loca%"
 
 Rem Start menu
 :menu 
-title BlueMug %L%  V1.0 Beta
+title BlueMug %L%  V1.0
 Rem Blue background
 color 1F
 echo.
@@ -133,6 +133,7 @@ title NEW PROGRAM in %L%
 color 1F
 echo.
 set /p "new=Enter name of the new program: "
+if not defined new  cls & goto menu
 type nul > "%new%%ext%"
 
 Rem Editing programs - new or existing{editx}

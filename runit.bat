@@ -7,7 +7,7 @@ cls
 color 3f
 setlocal enabledelayedexpansion
 echo.
-echo:     Select a program [.exe] to run
+echo:    Select a program [.exe] to run
 echo.
 echo ...please wait for selection window...
 for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') do (
