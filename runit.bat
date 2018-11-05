@@ -1,29 +1,42 @@
 <# : 
 @echo off
-title RUN
+cls
 :select
+title RUN
 cls
 color 3f
 setlocal enabledelayedexpansion
+echo.
+echo:     Select a program [.exe] to run
+echo.
 echo ...please wait for selection window...
 for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') do (
     set "cf=%%~I"
 )
+:runag 
 cls
+echo.
+echo ****EXECUTION/OUTPUT****
 title RUN:%cf%
 color 2F
-if defined cf ( 
+if defined cf (
 echo.
 "%cf%"
-set cf=
 echo.
-echo.
-pause
-echo.
+goto runagask
  ) else (
 echo: No files selected.
-echo. )
-CHOICE /C YN /M "Run more?"
+echo.
+goto runan )
+:runagask 
+echo.
+CHOICE /C YN /M "Run the same prog again?"
+if %errorlevel% EQU 1  GOTO runag 
+if %errorlevel% EQU 2  set cf=
+:runan 
+cls
+echo.
+CHOICE /C YN /M "Run another program?"
 IF %errorlevel% EQU 1 ( GOTO select )
 IF %errorlevel% EQU 2 ( GOTO :EOF )
 : end Batch portion / begin PowerShell hybrid chimera #>
