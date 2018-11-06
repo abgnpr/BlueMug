@@ -51,7 +51,7 @@ Owing to these difficulties, dilemma and realization of the problems faced by a 
 (for C/C++), I created BlueMug.
 
 Hope You'll Enjoy using it
--Abhigyan Prakash
+-Abhigyan Prakash 
 
 
 

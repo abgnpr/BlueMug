@@ -3,4 +3,4 @@ auto saver for editor (plugins are available)
 session write to file --> code-output OR code-errors 
 extending support for python
 debugger
-C# - transition - but we'll decide the look
+C# - transition - but we'll decide the look 
