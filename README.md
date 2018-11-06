@@ -23,6 +23,7 @@ courses/colleges who have to learn C/C++.
 * Ideal for writing source files quickly
 * Less clicking:stick to the keyboard, do it 'the programmer way'
 * Efficient workspace and program source-file management
+* Has a run-program selector (from workspace itself)
 * **Any one can alter the batch scripts in order to make it suitable for his/her own needs**
 
 **PS**
