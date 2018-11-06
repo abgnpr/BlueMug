@@ -5,7 +5,7 @@
 
 Blue Mug is a programming environment for C/C++ built upon MinGW and notepad++.
 
-It is made up of a set of batch scripts containing commands which automate 
+It comprises a set of batch scripts containing commands which automate 
 the various tasks that a coder (the learner/beginner in this case) 
 needs to get done, right from the point of creating a source file 
 to its successful compilation and execution (including all intermediate and 
