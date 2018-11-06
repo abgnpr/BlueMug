@@ -37,7 +37,7 @@ and make necessary changes.
 Somebody told me that the C family of programming languages is awesome. So I decided to 
 start with learning C. I bought a book on it. After going through a couple of programs in the book, 
 there was the obvious urge of writing real programs on a machine. Next step was setting up the environment.
-This cause a dilemma...there were some 'bests' among the IDEs but 
+This caused a dilemma...there were some 'bests' among the IDEs but 
 they did not fulfill my needs as a beginner...and there were some 'simple ones' that were no longer supported 
 on modern Windows operating systems. Plus, different components like IDE and Compiler collection have to be fetched from different places.
 
