@@ -13,11 +13,11 @@ iterated requirements).
 
 **Features**
 
-*Easy to install (Setup includes everything to start programming in C and C++)
-*Menu driven approach
-*Ideal for writing source files quickly
-*Less clicking:stick to the keyboard, do it 'the programmer way'
-*Efficient workspace and program source-file management
+* Easy to install (Setup includes everything to start programming in C and C++)
+* Menu driven approach
+* Ideal for writing source files quickly
+* Less clicking:stick to the keyboard, do it 'the programmer way'
+* Efficient workspace and program source-file management
 * **Any one can alter the batch scripts in order to make it suitable for his/her own needs**
 
 **Who is it aimed at?**
@@ -27,9 +27,9 @@ courses/colleges who have to learn C/C++.
 
 **PS**
 
-*Those using Batch files downloaded directly from GitHub can place them anywhere in their windows systems
+* Those using Batch files downloaded directly from GitHub can place them anywhere in their windows systems
 and run. Required folder hierarchy for editor and compiler are "%systemdrive%\BlueMug\nppbin\(notepad++ executable)"  AND "%systemdrive%\MinGW" respectively.
-*whoever is interested in writing header(.h) files can just replace all trace assignments made to the 'ext' variable in the scipt 
+* whoever is interested in writing header(.h) files can just replace all trace assignments made to the 'ext' variable in the scipt 
 and make necessary changes.
 
 **Why BlueMug?**
