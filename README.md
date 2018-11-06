@@ -11,6 +11,11 @@ needs to get done, right from the point of creating a source file
 to its successful compilation and execution (including all intermediate and 
 iterated requirements).
 
+**Who is it aimed at?**
+
+Beginners like secondary/senior secondary school students OR students in various 
+courses/colleges who have to learn C/C++. 
+
 **Features**
 
 * Easy to install (Setup includes everything to start programming in C and C++)
@@ -19,11 +24,6 @@ iterated requirements).
 * Less clicking:stick to the keyboard, do it 'the programmer way'
 * Efficient workspace and program source-file management
 * **Any one can alter the batch scripts in order to make it suitable for his/her own needs**
-
-**Who is it aimed at?**
-
-Beginners like secondary/senior secondary school students OR students in various 
-courses/colleges who have to learn C/C++. 
 
 **PS**
 
