@@ -3,7 +3,7 @@
 
 **What's BlueMug?**
 
-Blue mug is a programming environment for C/C++ built upon MinGW and notepad++.
+Blue Mug is a programming environment for C/C++ built upon MinGW and notepad++.
 
 It is made up of a set of batch scripts containing commands which automate 
 the various tasks that a coder (the learner/beginner in this case) 
