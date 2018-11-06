@@ -236,7 +236,7 @@ echo: CURRENT PROGRAM in memory: %new%
 echo.
 echo: E: Re-edit current program code
 echo.
-echo: R: Re-run the current program again
+echo: R: Re-run the current program
 echo.
 echo: D: Delete current program{source} file
 echo.
