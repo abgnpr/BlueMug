@@ -1,4 +1,4 @@
-# BlueMug BFPE Scripts of this IDE are in Development stage. 
+# BlueMug BFPE
 ## Beginner Friendly Programming Environment for C/C++ programmers 
 
 **What's BlueMug?**
