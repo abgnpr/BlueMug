@@ -12,6 +12,7 @@ to its successful compilation and execution (including all intermediate and
 iterated requirements).
 
 **Features**
+
 -Easy to install (Setup includes everything to start programming in C and C++)
 -Menu driven approach
 -Ideal for writing source files quickly
@@ -20,6 +21,7 @@ iterated requirements).
 -**Any one can alter the batch scripts in order to make it suitable for his/her own needs**
 
 **Who is it aimed at?**
+
 Beginners like secondary/senior secondary school students OR students in various 
 courses/colleges who have to learn C/C++. 
 
