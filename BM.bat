@@ -97,7 +97,7 @@ echo.
 set "new="
 echo:  AVAILABLE %L% PROGRAM FILES, IN YOUR WORKSPACE                    Press ENTER 
 echo:                                                                  to go back.
-dir /b *%ext%
+dir *%ext% /B /W /O:D
 echo.
 echo.
 echo.Enter name of a program from the above list.
@@ -198,12 +198,18 @@ cls
 echo.
 echo:Ready to Compile and Run?
 echo.
-echo:Your program file has been saved at %loca% 
+echo:Your program(source) file has been saved at %loca% 
 echo.
-echo:You can close this window at this stage if you don't want to compile and
-echo:run your program. Your source file won't be lost.
+echo: C - compile and run.
+echo: S - Start menu
+echo: P - Post-session menu.
 echo.
-pause
+choice /C CSP
+if %errorlevel% EQU 1 (goto compile)
+if %errorlevel% EQU 2 (cls & goto menu)
+if %errorlevel% EQU 3 (cls & goto option)
+
+:compile 
 echo:Please wait...COMPILING
 
 Rem error.tmp for storing compile time errors

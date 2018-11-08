@@ -30,8 +30,8 @@ courses/colleges who have to learn C/C++.
 
 * Those using Batch files downloaded directly from GitHub can place them anywhere in their windows systems
 and run. Required folder hierarchy for editor and compiler are "%systemdrive%\BlueMug\nppbin\(notepad++ executable)"  AND "%systemdrive%\MinGW" respectively.
-* whoever is interested in writing header(.h) files can just replace all trace assignments made to the 'ext' variable in the scipt 
-and make necessary changes.
+* whoever is interested in writing header(.h) files can just trace assignments made to the 'ext' variable in the scipt 
+and make necessary changes. (.cpp --> .h)
 
 **Why BlueMug?**
 
@@ -52,7 +52,6 @@ Owing to these difficulties, dilemma and realization of the problems faced by a 
 
 Hope You'll Enjoy using it
 -Abhigyan Prakash 
-<ap44122@gmail.com>
 
 
 
