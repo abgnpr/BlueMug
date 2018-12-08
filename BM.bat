@@ -29,9 +29,9 @@ Rem Delayed expansion - to be able to expand variables at runtime
 SetLocal EnableDelayedExpansion
 
 Rem Setting environment variable
-set path=%systemdrive%\MinGW\bin;%path%
+set path=%systemdrive%\mingw\bin;%systemdrive%\nodejs;%path%
 
-Rem home is the directory in whic this batch file lies
+Rem home is the directory in which this batch file lies
 set "home=%cd%"
 
 Rem File containing default workspace{desktop} is created if the file 
@@ -62,7 +62,8 @@ cd "%loca%"
 
 Rem Start menu
 :menu 
-title BlueMug %L%  V1.0
+set "new="
+title BlueMug V1.0 for %L%
 Rem Blue background
 color 1F
 echo.
@@ -70,7 +71,7 @@ echo: HELLO THERE                                          1 - LICENSE  2 - CRED
 echo.
 echo: START MENU
 echo.
-echo: Let's program in %L%  (Press S to switch language C/C++)
+echo: Let's program in %L%  (Press S to switch language C/C++/Py/TS/JS)
 echo.
 echo: N - Create a new program in %L%
 echo.
@@ -95,14 +96,13 @@ cls
 color 1F
 echo.
 set "new="
-echo:  AVAILABLE %L% PROGRAM FILES, IN YOUR WORKSPACE                    Press ENTER 
-echo:                                                                  to go back.
+echo:  AVAILABLE %L% PROGRAM FILES, IN YOUR WORKSPACE                     
+echo.
 dir *%ext% /B /W /O:D
 echo.
 echo.
-echo.Enter name of a program from the above list.
-echo.OR Press ENTER {without any input} to go back.
-echo.
+echo.Enter name of a program from the above list.         Press ENTER {without input}
+echo.                                                     to go back.
 echo.
 set /p "new=ENTER NAME {just the prog name, no extensions}: "
 echo.
@@ -111,7 +111,6 @@ if exist "!loca!\!new!!ext!" goto edit
 echo:The file you specified is not there. Please check above
 echo.
 pause
-set "new="
 goto editx )  
 
 Rem Choose a program in workspace and run it
@@ -130,7 +129,10 @@ goto checkloc )
 Rem Switching Language
 if %errorlevel% EQU 5 (
 if %L% EQU C set "ext=.cpp" & set "cplr=g++" & set "L=C++" & cls & goto menu 
-if %L% EQU C++ set "ext=.c" & set "cplr=gcc" & set "L=C" & cls & goto menu ) 
+if %L% EQU C++ set "ext=.py" & set "cplr=python" & set "L=Python" & cls & goto menu 
+if %L% EQU Python set "ext=.ts" & set "cplr=tsc" & set "L=TypeScript" & cls & goto menu 
+if %L% EQU TypeScript set "ext=.js" & set "cplr=node" & set "L=JavaScript" & cls & goto menu 
+if %L% EQU JavaScript set "ext=.c" & set "cplr=gcc" & set "L=C" & cls & goto menu ) 
 
 Rem to open up the workspace directory.
 if %errorlevel% EQU 6 (
@@ -156,8 +158,11 @@ cls
 title NEW PROGRAM in %L%
 color 1F
 echo.
+echo:                                                        Press ENTER to go back
+echo.
 set /p "new=Enter name of the new program: "
 if not defined new  cls & goto menu
+if exist "%new%%ext%" goto edit
 type nul > "%new%%ext%"
 
 Rem Editing programs - new or existing{editx}
@@ -169,8 +174,8 @@ echo.
 echo:CODING WINDOW OPEN
 echo.
 echo: TYPE...
-echo: SAVE... 
-echo:CLOSE... Third icon from top left in the coding window
+echo: SAVE... Third icon from top left in the coding window
+echo:CLOSE... 
 echo.
 echo.
 echo:WARNING : DONT CLOSE THE CODING WINDOW WITHOUT SAVING YOUR WORK.
@@ -178,54 +183,86 @@ echo.
 "%systemdrive%\BlueMug\nppbin\notepad++.exe" "%new%%ext%"
 del "%systemdrive%\BlueMug\nppbin\session.xml"
 
-Rem checking if the user has supplied some code in the source file or not
-for /f %%j IN ("%new%%ext%") DO set sourcesize=%%~zj
-if %sourcesize% EQU 0 (
+
+
+color 3f
 cls
+
+Rem checking if the user has supplied some code in the source file or not
+for /f "delims=" %%j IN ("!loca!\!new!!ext!") DO set sourcesize=%%~zj
+if %sourcesize% EQU 0 (
 color 4f
-echo.
-echo:The compiler feels dishonoured.
 echo. 
 echo:There isn't a single piece of code in your source file - %new%%ext%
-echo:You must write something to continue.
+echo:You must write something otherwise there will be error while compile/run.
 echo.
-echo:also,remember not to close the CODING WINDOW without saving your work.
-echo.
-pause
-goto edit ) 
+echo:also,make sure you didn't close the CODING WINDOW without saving your work. ) 
 
-cls
-echo.
-echo:Ready to Compile and Run?
 echo.
 echo:Your program(source) file has been saved at %loca% 
 echo.
-echo: C - compile and run.
+echo:READY TO RUN / COMPILE AND RUN?
+echo.
+echo: R - compile and run / run.
+echo: E - re-edit
+echo: D - delete
+echo.
 echo: S - Start menu
 echo: P - Post-session menu.
 echo.
-choice /C CSP
-if %errorlevel% EQU 1 (goto compile)
-if %errorlevel% EQU 2 (cls & goto menu)
-if %errorlevel% EQU 3 (cls & goto option)
+
+choice /C REDSP
+if %errorlevel% EQU 1 ( 
+if %L% EQU Python goto directrun
+if %L% EQU JavaScript goto directrun
+Rem if Language is C/C++/TS then compile
+goto compile
+)
+if %errorlevel% EQU 2 goto edit
+if %errorlevel% EQU 3 del "%new%%ext%" & cls & goto menu
+if %errorlevel% EQU 4 (cls & goto menu)
+if %errorlevel% EQU 5 (cls & goto option)
+
+
+Rem to run python script
+:directrun 
+if %L% EQU TypeScript set "ext=.js" & set "cplr=node"
+if NOT EXIST "%new%%ext%" echo:%L% source file not found & pause & goto option
+cls
+color 2f
+title RUN: %new%%ext%
+echo.
+%cplr% "%new%%ext%"
+if %L% EQU TypeScript set "ext=.ts" & set "cplr=tsc"
+echo.
+echo:RUN SUCCESSFUL
+pause
+goto option
+
 
 :compile 
 echo:Please wait...COMPILING
 
 Rem error.tmp for storing compile time errors
 type nul > error.tmp
+Rem compile command - errors {stderr} written to file error.tmp
+if %L% EQU C ( 
+"%cplr%.exe" "%new%%ext%" -o "%loca%\%new%.exe" 2>> error.tmp ) 
+if %L% EQU C++ ( 
+"%cplr%.exe" "%new%%ext%" -o "%loca%\%new%.exe" 2>> error.tmp ) 
+if %L% EQU TypeScript (
+call %cplr% "%loca%\%new%%ext%" >> error.tmp )
 
-Rem compile command - errors {stderr} written to file eroor.tmp
-"%systemdrive%\MinGW\bin\%cplr%.exe" "%loca%\%new%%ext%" -o "%loca%\%new%.exe" 2>> error.tmp 
-
-Rem if the error file is empty
+Rem checking if there are compile time errors...by counting char.s in errror.tmp
 for /f %%i IN ("error.tmp") DO set size=%%~zi
-if %size% EQU 0  ( 
+if %size% EQU 0 ( 
 Rem we proceed with run
 :run 
+if %L% EQU TypeScript del error.tmp & goto directrun 
 color 2f
 title RUN: %new%.exe
 echo.
+if NOT EXIST "%new%.exe" echo:Program executable file not found & pause & goto option
 cls
 ECHO: ***EXECUTION/OUTPUT***
 echo.
@@ -248,21 +285,22 @@ echo:Your code has FOLLOWING ERRORS:
 echo.
 type error.tmp
 echo.
-Rem remove this pause - for debug purpose
 echo:COMPILE UNSUCCESSFUL
 del error.tmp
 echo.
 pause
 goto :option ) 
 
+
 :option 
 cls
 title WHAT NEXT?
-color 6f
+rem old code - 6f
+color 02
 echo.
-echo  ******** Post-Session MENU *********
+echo:  ******** Post-Session MENU *********              Press 'O' to Open Workspace
 echo.
-echo: CURRENT PROGRAM in memory: %new%
+echo: CURRENT PROGRAM in memory: %new% in %L%
 echo.
 echo: E: Re-edit current program code
 echo.
@@ -279,30 +317,38 @@ echo.
 echo: Q: Quit
 echo.
 
-CHOICE /C ERDNXSQ
+CHOICE /C ERDNXSQO
 
 IF %errorlevel% EQU 1 ( 
 if not defined new goto option
 goto edit ) 
 
 IF %errorlevel% EQU 2 ( 
-if not exist %new%.exe cls & echo. & echo:No executable found; Was either deleted or the previous program wasn't compiled & pause & goto option
-goto run ) 
+if %L% EQU C goto run
+if %L% EQU C++ goto run
+if %L% EQU Python goto directrun
+if %L% EQU TypeScript goto directrun
+if %L% EQU JavaScript goto directrun ) 
 
 IF %errorlevel% EQU 3 ( 
 if not defined new goto option
+if %L% EQU Python del "%new%%ext%" & goto destroy
+if %L% EQU TypeScript del "%new%%ext%" & goto destroy
+if %L% EQU JavaScript del "%new%%ext%" & goto destroy
 2>nul del "%new%%ext%"
 2>nul del "%new%.exe"
+:destroy
 Rem the variable new is destroyed
 set new=
 echo: DELETE succcessful
 pause
 goto option ) 
 
-IF %errorlevel% EQU 4 ( GOTO newp ) 
+IF %errorlevel% EQU 4 ( set "new=" & GOTO newp ) 
 IF %errorlevel% EQU 5 ( GOTO editx ) 
 IF %errorlevel% EQU 6 ( cls & GOTO menu ) 
 IF %errorlevel% EQU 7 ( GOTO exitb ) 
+IF %errorlevel% EQU 8 ( start . & cls & goto option ) 
 
 :exitb
 title Exit BlueMug 

@@ -15,10 +15,11 @@ Rem GNU General Public License for more details.
 Rem You should have received a copy of the GNU General Public License
 Rem along with this program.
 setlocal
+color 3f
 echo.
-echo:...Please select your workspace folder...
+echo:                    ...Please select your workspace folder...
 echo.
-echo:       Opening chooser.Please wait
+echo:                           Opening chooser.Please wait
 
 set "psCommand="(new-object -COM 'Shell.Application').BrowseForFolder(0,'Please choose workspace folder.',0,0).self.path""
 for /f "usebackq delims=" %%I in (`powershell %psCommand%`) do set "folder=%%I"
@@ -33,7 +34,7 @@ echo:
 pause
 ) else ( 
 echo.
-echo.No folder selected...Work space remains unchanged i.e.
+echo.No folder selected...Work space remains unchanged
 echo.
 type "%userprofile%\Documents\loc.wsp"
 echo.

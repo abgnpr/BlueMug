@@ -22,9 +22,9 @@ cls
 color 3f
 setlocal enabledelayedexpansion
 echo.
-echo:    Select a program [.exe] to run
+echo:                Select a program[.exe] / python script to run
 echo.
-echo ...please wait for selection window...
+echo:                   ...please wait for selection window...
 for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') do (
     set "cf=%%~I"
 )
@@ -47,7 +47,7 @@ goto runan )
 echo.
 CHOICE /C YN /M "Run the same prog again?"
 if %errorlevel% EQU 1  GOTO runag 
-if %errorlevel% EQU 2  set cf=
+if %errorlevel% EQU 2  set "cf="
 :runan 
 cls
 echo.
@@ -60,7 +60,7 @@ $loc=type -path "$ENV:Userprofile\Documents\loc.wsp"
 Add-Type -AssemblyName System.Windows.Forms
 $f = new-object Windows.Forms.OpenFileDialog
 $f.InitialDirectory = $loc
-$f.Filter = "Executable (*.exe)|*.exe|All Files (*.*)|*.*"
+$f.Filter = "Executable/py script|*.exe;*.py"
 $f.ShowHelp = $true
 $f.Multiselect = $false
 [void]$f.ShowDialog()

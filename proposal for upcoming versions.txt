@@ -1,6 +1,3 @@
-correction of useless file loacation display problem present in every line on the ERROR window
 auto saver for editor (plugins are available)
 session write to file --> code-output OR code-errors 
-extending support for python
 debugger
-C# - transition - but we'll decide the look 
