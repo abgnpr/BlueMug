@@ -26,7 +26,7 @@ for /f "usebackq delims=" %%I in (`powershell %psCommand%`) do set "folder=%%I"
 setlocal enabledelayedexpansion
 if defined folder ( 
 type nul > "%userprofile%\Documents\loc.wsp"
-if !folder:~-2!==:\ set folder=%folder:~0,-1%
+if !folder:~-2!==:\ set "folder=%folder:~0,-1%"
 >> "%userprofile%\Documents\loc.wsp" echo !folder!
 echo.
 echo:Your new workspace - !folder!
