@@ -1,5 +1,5 @@
 # BlueMug BFPE
-## Beginner Friendly Programming Environment for C/C++ programmers 
+## Beginner Friendly Programming Environment for C, C++, Python and JavaScript programmers 
 
 **What's BlueMug?**
 
