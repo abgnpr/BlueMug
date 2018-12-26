@@ -1,6 +1,8 @@
 # BlueMug BFPE
 ## Beginner Friendly Programming Environment for C, C++, Python and JavaScript programmers 
 
+https://sites.google.com/view/bluemug/home
+
 **What's BlueMug?**
 
 Blue Mug is a programming environment for C / C++ / Python / JS built using batch scripts and uses notepad++, MingGW, nodeJS and Python.
