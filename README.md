@@ -3,7 +3,7 @@
 
 **What's BlueMug?**
 
-Blue Mug is a programming environment for C / C++ / Python / JS built using batch scripts and uses notepad++, MingGW, nodeJS and Python.
+Blue Mug is a programming environment for C / C++ / Python / JS built using batch scripts and uses notepad++, MingGW, nodeJS and embedded Python.
 
 It comprises a set of batch scripts containing commands which automate 
 the various tasks that a coder (the learner/beginner in this case) 

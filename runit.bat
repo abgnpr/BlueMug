@@ -68,9 +68,6 @@ goto runan )
 Rem Run-again-ask
 :runagask 
 echo.
-echo.
-echo. RUN SUCCESSFUL
-echo.
 CHOICE /C YN /M "Run the same prog again?"
 if %errorlevel% EQU 1  GOTO runag 
 if %errorlevel% EQU 2  set "cf="
