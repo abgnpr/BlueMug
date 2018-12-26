@@ -22,7 +22,7 @@ cls
 color 3f
 setlocal enabledelayedexpansion
 echo.
-echo:                Select a program[.exe] / python script to run
+echo:           Select a program[.exe] / python script / JavaScript to run
 echo.
 echo:                   ...please wait for selection window...
 for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') do (
@@ -31,19 +31,45 @@ for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') d
 :runag 
 cls
 echo.
-echo ****EXECUTION/OUTPUT****
-title RUN:%cf%
+title RUN: !cf!
 color 2F
 if defined cf (
 echo.
-"%cf%"
+cls
+echo.*******************************************************************************
+echo.
+echo.                               SUPPLY ARGUMENTS
+echo.
+echo.  Please supply arguments - if any
+echo.
+echo.  Then, press Enter to continue.  
+echo.
+echo.
+echo.
+echo.
+set /p "args=!cf! "
+cls
+echo.*******************************************************************************
+echo.
+echo.                              EXECUTION / OUTPUT
+echo.
+if !cf:~-2! EQU js call node "!cf!" !args! & set "args=" & goto runagask
+if !cf:~-2! EQU py call python "!cf!" !args! & set "args=" & goto runagask
+Rem to run c and c++
+"!cf!" !args!
+set "args="
 echo.
 goto runagask
  ) else (
 echo: No files selected.
 echo.
 goto runan )
+
+Rem Run-again-ask
 :runagask 
+echo.
+echo.
+echo. RUN SUCCESSFUL
 echo.
 CHOICE /C YN /M "Run the same prog again?"
 if %errorlevel% EQU 1  GOTO runag 
@@ -60,7 +86,7 @@ $loc=type -path "$ENV:Userprofile\Documents\loc.wsp"
 Add-Type -AssemblyName System.Windows.Forms
 $f = new-object Windows.Forms.OpenFileDialog
 $f.InitialDirectory = $loc
-$f.Filter = "Executable/py script|*.exe;*.py"
+$f.Filter = "Executable/py script/JavaScript|*.exe;*.py;*.js"
 $f.ShowHelp = $true
 $f.Multiselect = $false
 [void]$f.ShowDialog()
