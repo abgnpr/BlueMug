@@ -36,7 +36,7 @@ set path=%systemdrive%\mingw\bin;%systemdrive%\nodejs;%systemdrive%\python;%path
 Rem home is the directory in which this batch file lies
 set "home=%cd%"
 
-Rem File containing default workspace{desktop} is created if the file 
+Rem File containing default workspace desktop is created if the file 
 Rem specifying workspace directory is not found. Later on changes to
 Rem workspace directory are written to this file
 if not exist %userprofile%\Documents\loc.wsp ( 
@@ -59,7 +59,7 @@ if not defined loca ( GOTO createloc )
 Rem necessary step for switching drives
 %loca:~0,2%
 
-Rem All file I/O from now on will take place in loca{the workspace}
+Rem All file I/O from now on will take place in loca the workspace
 cd "%loca%"
 
 Rem copy xntimer config file to workspace
@@ -110,7 +110,7 @@ echo. **************************************************************************
 echo.
 echo:                  AVAILABLE %L% PROGRAM FILES, IN YOUR WORKSPACE                     
 echo.
-dir *%ext% /O:-D /W
+dir *%ext% /O:D /W
 echo.
 echo.
 echo.Enter name of a program from the above list.       Press ENTER {without input}
@@ -196,7 +196,7 @@ if not defined new  cls & goto menu
 if exist "%new%%ext%" goto edit
 type nul > "%new%%ext%"
 
-Rem Editing programs - new or existing{editx}
+Rem Editing programs
 :edit 
 cls 
 color 84
@@ -304,7 +304,7 @@ echo.***************************************************************************
 
 Rem error.tmp for storing compile time errors
 type nul > error.tmp
-Rem compile command - errors {stderr} written to file error.tmp
+Rem compile command - errors stderr written to file error.tmp
 if %L% EQU C ( 
 "%cplr%.exe" "%new%%ext%" -o "%loca%\%new%.exe" 2>> error.tmp ) 
 if %L% EQU C++ ( 
