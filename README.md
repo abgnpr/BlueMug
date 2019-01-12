@@ -4,7 +4,7 @@
 Download the stable release here: 
 https://sites.google.com/view/bluemug/home
 
-Download V 1.2.0Beta patch here:
+Download V 1.2.0 Evaluation patch here:
 https://sites.google.com/view/bluemug/developers
 
 **What's BlueMug?**
