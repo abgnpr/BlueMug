@@ -9,13 +9,19 @@ https://sites.google.com/view/bluemug/developers
 
 **What's BlueMug?**
 
-Blue Mug is a programming environment for C / C++ / Python / JS built using batch scripts and uses notepad++, MingGW, nodeJS and Python.
+A somewhat beautiful batch interface that makes writing, compiling and running C, C++ programs on Windows systems super easy. 
 
-It comprises a set of batch scripts containing commands which automate 
+It comprises a set of batch and python scripts containing commands which automate 
 the various tasks that a coder (the learner/beginner in this case) 
 needs to get done, right from the point of creating a source file 
 to its successful compilation and execution (including all intermediate and 
 iterated steps and requirements).
+
+Uses (for compilation and runtime support)
+
+ - MinGW GCC Toolchain 8.1.0
+ - Python 3.7.2
+ - Node.js 10.15.0
 
 **Who is it aimed at?**
 
@@ -31,14 +37,20 @@ courses/colleges who are learning or going to learn C / C++ / Python / JavaScrip
 * Menu driven approach
 * **Efficient workspace and program source-file management**
 * Has a run-program selector
-* **Any one can alter the batch scripts in order to make it suitable for his/her own needs**
 
 **PS**
 
-* Those using Batch files downloaded directly from GitHub can place them anywhere in their windows systems
-and run. Required folder hierarchy for editor and compiler are "%systemdrive%\BlueMug\nppbin\(notepad++ executable)"  AND "%systemdrive%\MinGW" respectively.
-* whoever is interested in writing header(.h) files can just trace assignments made to the 'ext' variable in the script 
-and make necessary changes. (.cpp --> .h)
+* Though BlueMug automation makes use of notepad++ as the default editor but it will soon be editor independent.
+
+* Those who want to checkout the project can download the sources directly from GitHub and place them anywhere in their windows system
+  and run. 
+  
+  Required folder hierarchy for other components
+    -> C/C++  -  %systemdrive%\MinGW
+    -> python -  %systemdrive%\python
+    -> nodejs -  %systemdrive%\nodejs
+    
+* option for writing C/C++ headers will soon be added.
 
 **Why BlueMug?**
 
