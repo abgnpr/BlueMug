@@ -1,4 +1,4 @@
-<# : 
+@echo off
 Rem Blue Mug is a programming environment for C/C++ built upon MinGW and notepad++.
 Rem Copyright (C) 2018 Abhigyan Prakash
 
@@ -14,26 +14,30 @@ Rem GNU General Public License for more details.
 
 Rem You should have received a copy of the GNU General Public License
 Rem along with this program.
-@echo off
+set path=%systemdrive%\mingw\bin;%systemdrive%\nodejs;%systemdrive%\python;%path%
 cls
+
+Rem %1 - where run_fildg is located i.e. home
+
+Rem this step is to prevent problems caused by slash while calling fildgpath
+Rem in the for statement below.
+if [%1]==[] ( set "fildgpath=" ) else ( set "fildgpath=%~1\") 
+
 :select
 title RUN
 cls
-color 3f
+color 1f
 setlocal enabledelayedexpansion
 echo.
-echo:           Select a program[.exe] / python script / JavaScript to run
+echo.                            Choose a program to run
 echo.
-echo:                   ...please wait for selection window...
-for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') do (
-    set "cf=%%~I"
-)
+for /f "delims=" %%j IN ('"%fildgpath%run_fildg.py"') DO set filename=%%j
 :runag 
 cls
 echo.
-title RUN: !cf!
+title RUN: !filename!
 color 2F
-if defined cf (
+if defined filename (
 echo.
 cls
 echo.*******************************************************************************
@@ -47,16 +51,16 @@ echo.
 echo.
 echo.
 echo.
-set /p "args=!cf! "
+set /p "args=!filename! "
 cls
 echo.*******************************************************************************
 echo.
 echo.                              EXECUTION / OUTPUT
 echo.
-if !cf:~-2! EQU js call node "!cf!" !args! & set "args=" & goto runagask
-if !cf:~-2! EQU py call python "!cf!" !args! & set "args=" & goto runagask
+if !filename:~-2! EQU js call "%systemdrive%\nodejs\node" "!filename!" !args! & set "args=" & goto runagask
+if !filename:~-2! EQU py call "%systemdrive%\python\python" "!filename!" !args! & set "args=" & goto runagask
 Rem to run c and c++
-"!cf!" !args!
+"!filename!" !args!
 set "args="
 echo.
 goto runagask
@@ -73,21 +77,15 @@ echo. RUN SUCCESSFUL
 echo.
 CHOICE /C YN /M "Run the same prog again?"
 if %errorlevel% EQU 1  GOTO runag 
-if %errorlevel% EQU 2  set "cf="
+if %errorlevel% EQU 2  set "filename="
+
+Rem Run-another
 :runan 
 cls
+endlocal
+echo.
+echo.
 echo.
 CHOICE /C YN /M "Run another program?"
 IF %errorlevel% EQU 1 ( GOTO select )
 IF %errorlevel% EQU 2 ( GOTO :EOF )
-: end Batch portion / begin PowerShell hybrid chimera #>
-
-$loc=type -path "$ENV:Userprofile\Documents\loc.wsp"
-Add-Type -AssemblyName System.Windows.Forms
-$f = new-object Windows.Forms.OpenFileDialog
-$f.InitialDirectory = $loc
-$f.Filter = "Executable/py script/JavaScript|*.exe;*.py;*.js"
-$f.ShowHelp = $true
-$f.Multiselect = $false
-[void]$f.ShowDialog()
-if ($f.Multiselect) { $f.FileNames } else { $f.FileName }

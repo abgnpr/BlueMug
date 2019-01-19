@@ -18,11 +18,11 @@ Rem You should have received a copy of the GNU General Public License
 Rem along with this program.
 echo./\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P 
 echo.
-echo.                             WELCOME TO BLUEMUG
+echo.                         WELCOME TO BLUEMUG V 1.2.0
 echo.
-echo:    BlueMug BFPE  Copyright (C) 2018  Abhigyan Prakash {ap44122@gmail.com}
-echo:  This is free software, and you are welcome to redistribute it under certain
-echo:  conditions. See license for more details.
+echo.    BlueMug BFPE  Copyright (C) 2018  Abhigyan Prakash {ap44122@gmail.com}
+echo.  This is free software, and you are welcome to redistribute it under certain
+echo.  conditions. See license for more details.
 echo.
 pause
 cls
@@ -39,11 +39,12 @@ set "home=%cd%"
 Rem File containing default workspace desktop is created if the file 
 Rem specifying workspace directory is not found. Later on changes to
 Rem workspace directory are written to this file
-if not exist %userprofile%\Documents\loc.wsp ( 
+if not exist "%LOCALAPPDATA%\BlueMug\loc.wsp" ( 
 :createloc 
-type nul > "%userprofile%\Documents\loc.wsp"
+2>nul mkdir "%LOCALAPPDATA%\BlueMug"
+type nul > "%LOCALAPPDATA%\BlueMug\loc.wsp"
 2>nul mkdir "%userprofile%\Desktop\YourProgs"
->>"%userprofile%\Documents\loc.wsp" echo %userprofile%\Desktop\YourProgs
+>>"%LOCALAPPDATA%\BlueMug\loc.wsp" echo %userprofile%\Desktop\YourProgs
 ) 
 rem content of loca has no quotes
 
@@ -53,13 +54,13 @@ set "L=C" & set "ext=.c" & set "cplr=gcc"
 Rem fetching current workspace location
 Rem from loc.wsp in documents folder
 :checkloc 
-<"%userprofile%\Documents\loc.wsp" ( set /p "loca=" ) 
+<"%LOCALAPPDATA%\BlueMug\loc.wsp" ( set /p "loca=" ) 
 if not defined loca ( GOTO createloc ) 
 
 Rem necessary step for switching drives
 %loca:~0,2%
 
-Rem All file I/O from now on will take place in loca the workspace
+Rem All file I/O from now on will take place in loca - the workspace
 cd "%loca%"
 
 Rem copy xntimer config file to workspace
@@ -67,10 +68,10 @@ if not exist "%loca%\xntimer.ini" xcopy "C:\BlueMug\timer\xntimer.ini" "%loca%\"
 Rem Start menu
 :menu 
 set "new="
-title BM V1.1 for %L%
+title BM for %L%
 cls
-Rem Blue on Black theme
-color 71
+Rem white on blue theme
+color 1f
 rem color 0a
 echo.********************************************************************************
 echo:  HELLO THERE                                           1: LICENSE  2: CREDITS
@@ -108,33 +109,28 @@ color 71
 set "new="
 echo. ******************************************************************************
 echo.
-echo:                  AVAILABLE %L% PROGRAM FILES, IN YOUR WORKSPACE                     
+echo:                SELECT A %L% PROGRAM FILE, FROM YOUR WORKSPACE                     
 echo.
-dir *%ext% /O:D /W
-echo.
-echo.
-echo.Enter name of a program from the above list.       Press ENTER {without input}
-echo.                                                   to go back.
-echo.
-set /p "new=ENTER NAME {just the prog name, no extensions}: "
+FOR /F "usebackq delims=" %%j IN (`%systemdrive%\python\python.exe "%home%\choose_fildg.py" "%loca%" "%ext%" "%L%"`) DO set "new=%%~nj"
 echo.
 if not defined new  cls & goto menu
 if exist "!loca!\!new!!ext!" goto edit
-echo: The file you specified is not there. Please check above
+echo. The file you specified is not appropriate. Please check.
 echo.
 pause
 goto editx )  
 
 Rem Choose a program in workspace and run it
 if %errorlevel% EQU 3 (
-call "%home%\runit.bat"
+call "%home%\runit.bat" "%home%"
 cls
 goto menu ) 
 
 Rem change workspace folder - where source files and exe files will be stored
 if %errorlevel% EQU 4 ( 
 cls
-call "%home%\folderloc.bat"
+2>nul del "%loca%\xntimer.ini"
+call "%home%\folderloc.bat" "%LOCALAPPDATA%\BlueMug" "%home%"
 cls
 goto checkloc ) 
 
@@ -153,13 +149,13 @@ goto menu )
 
 Rem View LICENSE
 if %errorlevel% EQU 7 ( 
-if exist "%systemdrive%\BlueMug\CREDITS" notepad.exe "%systemdrive%\BlueMug\LICENSE"
+if exist "%home%\LICENSE" notepad.exe "%home%\LICENSE"
 cls
 goto menu ) 
 
 Rem View CREDITS
 if %errorlevel% EQU 8 ( 
-if exist "%systemdrive%\BlueMug\CREDITS" notepad.exe "%systemdrive%\BlueMug\CREDITS"
+if exist "%home%\CREDITS" notepad.exe "%home%\CREDITS"
 cls
 goto menu ) 
 
@@ -202,19 +198,19 @@ cls
 color 84
 title EDIT: !new! - %L%
 echo.
-echo: CODING WINDOW OPEN
+echo. CODING WINDOW OPEN
 echo.
-echo: TYPE...
+echo. TYPE...
 echo.
-echo: SAVE... Third icon from top left in the coding window
+echo. SAVE... Third icon from top left in the coding window
 echo.
-echo: CLOSE... 
+echo. CLOSE... 
 echo.
 echo.
-echo: WARNING : DON'T CLOSE THE CODING WINDOW WITHOUT SAVING YOUR WORK.
+echo. WARNING : DON'T CLOSE THE CODING WINDOW WITHOUT SAVING YOUR WORK.
 echo.
-"%systemdrive%\BlueMug\nppbin\notepad++.exe" "%new%%ext%"
-del "%systemdrive%\BlueMug\nppbin\session.xml"
+REM "path to your editor.exe" "%new%%ext%"
+call "%systemdrive%\BlueMug\nppbin\notepad++.exe" "%new%%ext%"
 
 color 6f
 cls
@@ -240,7 +236,7 @@ echo.
 echo:  Your program (source) file has been saved at 
 echo:         - !loca!
 echo.
-echo:  READY TO RUN / COMPILE AND RUN?
+echo:  READY TO RUN / COMPILE AND RUN? - !new!!ext!
 echo.
 echo:  R - RUN / COMPILE and RUN
 echo:  E - re-edit
@@ -436,7 +432,7 @@ color 1e
 echo.
 echo:                          Hope you enjoyed BlueMug BFPE
 echo.
-echo:                                 *Best Wishes*
+echo:                                 
 echo.
 echo.
 echo:                                   -Abhigyan,

@@ -14,20 +14,21 @@ Rem GNU General Public License for more details.
 
 Rem You should have received a copy of the GNU General Public License
 Rem along with this program.
+
+REM %1 - the place where loc.wsp is
+REM %2 - the place where get_wspFolder.py is located i.e. home
+
 setlocal
 color 3f
 echo.
 echo:                    ...Please select your workspace folder...
 echo.
-echo:                           Opening chooser.Please wait
-
-set "psCommand="(new-object -COM 'Shell.Application').BrowseForFolder(0,'Please choose workspace folder.',0,0).self.path""
-for /f "usebackq delims=" %%I in (`powershell %psCommand%`) do set "folder=%%I"
+for /f "delims=" %%j IN ('"%~2\get_wspFolder.py"') DO set folder=%%j
 setlocal enabledelayedexpansion
 if defined folder ( 
-type nul > "%userprofile%\Documents\loc.wsp"
+type nul > "%~1\loc.wsp"
 if !folder:~-2!==:\ set "folder=%folder:~0,-1%"
->> "%userprofile%\Documents\loc.wsp" echo !folder!
+>> "%~1\loc.wsp" echo !folder!
 echo.
 echo:Your new workspace - !folder!
 echo:
@@ -36,9 +37,11 @@ pause
 echo.
 echo.No folder selected...Work space remains unchanged
 echo.
-type "%userprofile%\Documents\loc.wsp"
+type "%~1\loc.wsp"
 echo.
 pause
 ) 
+
 endlocal
+
 GOTO :EOF
