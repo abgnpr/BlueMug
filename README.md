@@ -17,7 +17,7 @@ needs to get done, right from the point of creating a source file
 to its successful compilation and execution (including all intermediate and 
 iterated steps and requirements).
 
-Uses (for compilation and runtime support)
+Uses (for compiling and runtime support)
 
  - MinGW GCC Toolchain 8.1.0
  - Python 3.7.2
