@@ -14,7 +14,7 @@ A somewhat beautiful batch interface that makes writing, compiling and running C
 It comprises a set of batch and python scripts containing commands which automate 
 the various tasks that a coder (the learner/beginner in this case) 
 needs to get done, right from the point of creating a source file 
-to its successful compilation and execution (including all intermediate and 
+to its successful compile and execution (including all intermediate and 
 iterated steps and requirements).
 
 Uses (for compiling and runtime support)
