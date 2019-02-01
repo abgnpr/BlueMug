@@ -3,7 +3,7 @@
 
 ![alt text](https://github.com/mountAP/BlueMug/blob/master/Screenshot.png)
 
-Download the stable release here: 
+Download the latest release here: 
 https://sites.google.com/view/bluemug/home
 
 Download V 1.2.0 Evaluation patch here:
