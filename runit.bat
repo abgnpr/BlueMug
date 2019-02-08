@@ -14,7 +14,7 @@ Rem GNU General Public License for more details.
 
 Rem You should have received a copy of the GNU General Public License
 Rem along with this program.
-set path=%systemdrive%\mingw\bin;%systemdrive%\nodejs;%systemdrive%\python;%path%
+set path=%systemdrive%\mingw\bin;%systemdrive%\nodejs;%PYTHONBIN%;%path%
 cls
 
 Rem %1 - where run_fildg is located i.e. home
@@ -31,7 +31,7 @@ setlocal enabledelayedexpansion
 echo.
 echo.                            Choose a program to run
 echo.
-for /f "delims=" %%j IN ('"%fildgpath%run_fildg.py"') DO set filename=%%j
+FOR /F "usebackq delims=" %%j IN (`%PYTHONBIN%python.exe "%fildgpath%run_fildg.py"`) DO set filename=%%j
 :runag 
 cls
 echo.
@@ -58,7 +58,7 @@ echo.
 echo.                              EXECUTION / OUTPUT
 echo.
 if !filename:~-2! EQU js call "%systemdrive%\nodejs\node" "!filename!" !args! & set "args=" & goto runagask
-if !filename:~-2! EQU py call "%systemdrive%\python\python" "!filename!" !args! & set "args=" & goto runagask
+if !filename:~-2! EQU py call !PYTHONBIN!python "!filename!" !args! & set "args=" & goto runagask
 Rem to run c and c++
 "!filename!" !args!
 set "args="
@@ -71,7 +71,6 @@ goto runan )
 
 Rem Run-again-ask
 :runagask 
-echo.
 echo.
 echo. RUN SUCCESSFUL
 echo.

@@ -18,7 +18,7 @@ Rem You should have received a copy of the GNU General Public License
 Rem along with this program.
 echo./\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P /\P 
 echo.
-echo.                         WELCOME TO BLUEMUG V 1.2.0
+echo.                         WELCOME TO BLUEMUG V 1.2.1
 echo.
 echo.    BlueMug BFPE  Copyright (C) 2018  Abhigyan Prakash {ap44122@gmail.com}
 echo.  This is free software, and you are welcome to redistribute it under certain
@@ -31,7 +31,14 @@ Rem Delayed expansion - to be able to expand variables at runtime
 SetLocal EnableDelayedExpansion
 
 Rem Setting environment variable
-set path=%systemdrive%\mingw\bin;%systemdrive%\nodejs;%systemdrive%\python;%path%
+set path=%systemdrive%\mingw\bin;%systemdrive%\nodejs;%PYTHONBIN%;%path%
+Rem user var PYTHONBIN stores the location of the folder where
+Rem python executable is located.
+Rem if python is already installed before setting up BM 
+Rem then it has that location
+Rem Otherwise the default location is %systemdrive%\python\
+Rem mind the end \
+
 
 Rem home is the directory in which this batch file lies
 set "home=%cd%"
@@ -63,8 +70,6 @@ Rem necessary step for switching drives
 Rem All file I/O from now on will take place in loca - the workspace
 cd "%loca%"
 
-Rem copy xntimer config file to workspace
-if not exist "%loca%\xntimer.ini" xcopy "C:\BlueMug\timer\xntimer.ini" "%loca%\"
 Rem Start menu
 :menu 
 set "new="
@@ -111,7 +116,7 @@ echo. **************************************************************************
 echo.
 echo:                SELECT A %L% PROGRAM FILE, FROM YOUR WORKSPACE                     
 echo.
-FOR /F "usebackq delims=" %%j IN (`%systemdrive%\python\python.exe "%home%\choose_fildg.py" "%loca%" "%ext%" "%L%"`) DO set "new=%%~nj"
+FOR /F "usebackq delims=" %%j IN (`%PYTHONBIN%python.exe "%home%\choose_fildg.py" "%loca%" "%ext%" "%L%"`) DO set "new=%%~nj"
 echo.
 if not defined new  cls & goto menu
 if exist "!loca!\!new!!ext!" goto edit
@@ -129,7 +134,6 @@ goto menu )
 Rem change workspace folder - where source files and exe files will be stored
 if %errorlevel% EQU 4 ( 
 cls
-2>nul del "%loca%\xntimer.ini"
 call "%home%\folderloc.bat" "%LOCALAPPDATA%\BlueMug" "%home%"
 cls
 goto checkloc ) 
@@ -162,7 +166,7 @@ goto menu )
 Rem Open timer
 if %errorlevel% EQU 9 (
 cls
-start /B C:\BlueMug\timer\xntimer.exe
+start "" "!home!\timer\timer.exe"
 goto menu ) 
 
 Rem Python shell
@@ -210,7 +214,7 @@ echo.
 echo. WARNING : DON'T CLOSE THE CODING WINDOW WITHOUT SAVING YOUR WORK.
 echo.
 REM "path to your editor.exe" "%new%%ext%"
-call "%systemdrive%\BlueMug\nppbin\notepad++.exe" "%new%%ext%"
+call "%home%\nppbin\notepad++.exe" "%new%%ext%"
 
 color 6f
 cls

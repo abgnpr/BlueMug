@@ -23,8 +23,8 @@ color 3f
 echo.
 echo:                    ...Please select your workspace folder...
 echo.
-for /f "delims=" %%j IN ('"%~2\get_wspFolder.py"') DO set folder=%%j
 setlocal enabledelayedexpansion
+FOR /F "usebackq delims=" %%j IN (`%PYTHONBIN%python.exe "%~2\get_wspFolder.py"`) DO set folder=%%j
 if defined folder ( 
 type nul > "%~1\loc.wsp"
 if !folder:~-2!==:\ set "folder=%folder:~0,-1%"
