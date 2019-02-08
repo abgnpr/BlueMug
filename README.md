@@ -1,10 +1,10 @@
 # BlueMug BFPE
 ## Beginner Friendly Programming Environment for C, C++, Python and JavaScript programmers 
 
-![alt text](https://github.com/mountAP/BlueMug/blob/master/Screenshot.png)
-
 Download the latest release here: 
 https://sites.google.com/view/bluemug/home
+
+![alt text](https://github.com/mountAP/BlueMug/blob/master/Screenshot.png)
 
 Download V 1.2.0 Evaluation patch here:
 https://sites.google.com/view/bluemug/developers
